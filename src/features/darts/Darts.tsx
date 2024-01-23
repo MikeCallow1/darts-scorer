@@ -11,6 +11,7 @@ import {
   currentPlayer,
   scoreToPlayTo
 } from "./dartsSlice"
+import { checkouts } from "../../utils/checkouts"
 
 export const Darts = () => {
   const dispatch = useAppDispatch()
@@ -116,6 +117,12 @@ export const Darts = () => {
   const scoreLeft =
     scoreToPlay - curPlayer.scores.reduce((acc, cur) => acc + cur, 0);
   
+  // get total value of scores
+  const totalPoints = curPlayer.scores.reduce((acc, cur) => acc + cur, 0);
+  const average = totalPoints / curPlayer.scores.length;
+  
+  const checkout = checkouts[scoreLeft] ?? [];
+  
   if (scoreLeft === 0) {
     return (
       <div>
@@ -127,8 +134,19 @@ export const Darts = () => {
   return (
     <>
       <div>
-        {curPlayer.name} to throw.
-        {scoreLeft}
+        <div className={styles.header}>
+          <div className={styles.name}>
+            {curPlayer.name} to throw.
+          </div>
+          <div className={styles.score}>
+            {scoreLeft}
+          </div>
+          <div className={styles.checkout}>
+            {checkout.map(c => {
+              return <span className={styles.throw}>{c}</span>
+            })}
+          </div>
+        </div>
         <div className={styles.row}>
           <form onSubmit={e => {
             e.preventDefault();
@@ -159,20 +177,21 @@ export const Darts = () => {
           {
             playersArray.map(player => {
               return (
-                <>
-                  <div>
+                <div className={styles.scores}>
+                  <div className={styles.name}>
                     {player.name}
                   </div>
+                  {player.scores.map(score => {
+                    return (
+                      <>
+                        <div>{score}</div>
+                      </>
+                    )
+                  })}
                   <div>
-                    {player.scores.map(score => {
-                      return (
-                        <>
-                          <div>{score}</div>
-                        </>
-                      )
-                    })}
+                    Averages: {average.toFixed(2)}
                   </div>
-                </>
+                </div>
               )
             })
           }
