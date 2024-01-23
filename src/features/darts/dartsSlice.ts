@@ -103,7 +103,7 @@ export const dartsSlice = createAppSlice({
 })
 
 // Action creators are generated for each case reducer function.
-export const { decrement, increment, incrementByAmount, addScore, addPlayer, removePlayer, setGameScore } =
+export const { addScore, addPlayer, removePlayer, setGameScore } =
   dartsSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
@@ -113,12 +113,12 @@ export const { players, currentPlayer, scoreToPlayTo } = dartsSlice.selectors
 // Here's an example of conditionally dispatching actions based on current state.
 
 // add validation here. No score over 180, no minus values etc.
-export const incrementIfOdd =
-  (amount: number): AppThunk =>
-    (dispatch, getState) => {
-      const currentValue = selectCount(getState())
+// export const incrementIfOdd =
+//   (amount: number): AppThunk =>
+//     (dispatch, getState) => {
+//       const currentValue = selectCount(getState())
 
-      if (currentValue % 2 === 1 || currentValue % 2 === -1) {
-        dispatch(incrementByAmount(amount))
-      }
-    }
+//       if (currentValue % 2 === 1 || currentValue % 2 === -1) {
+//         dispatch(incrementByAmount(amount))
+//       }
+//     }
