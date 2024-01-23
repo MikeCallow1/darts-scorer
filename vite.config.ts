@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     open: true,
   },
+  base: '/darts-scorer',
   test: {
     globals: true,
     environment: "jsdom",
