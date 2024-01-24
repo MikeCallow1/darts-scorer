@@ -52,6 +52,18 @@ export const dartsSlice = createAppSlice({
       }
     ),
 
+    resetGame: create.reducer(
+      (state) => {
+        return {
+          ...state,
+          players: [],
+          status: "idle",
+          currentPlayer: 0,
+          score: 501,
+        }
+      }
+    ),
+
     setWinner: create.reducer(
       (state, action) => {
         
@@ -103,7 +115,7 @@ export const dartsSlice = createAppSlice({
 })
 
 // Action creators are generated for each case reducer function.
-export const { addScore, addPlayer, removePlayer, setGameScore } =
+export const { addScore, addPlayer, removePlayer, setGameScore, resetGame } =
   dartsSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.

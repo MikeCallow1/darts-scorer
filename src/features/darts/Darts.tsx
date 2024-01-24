@@ -7,6 +7,7 @@ import {
   addPlayer,
   removePlayer,
   setGameScore,
+  resetGame,
   players,
   currentPlayer,
   scoreToPlayTo
@@ -30,7 +31,7 @@ export const Darts = () => {
   if (!ready) {
     return (
       <div>
-        <div className={styles.row}>
+        <div className={styles.header}>
           {playersArray.map((player) => {
             return (
               <div>{player.name}</div>
@@ -67,10 +68,10 @@ export const Darts = () => {
               </button>
             )}
           </div>
-          <div className={styles.row}>
+          <div className={styles.radios}>
             <input
               type="radio"
-              className={styles.button}
+              className={styles.radio}
               onClick={(e) => dispatch(setGameScore(501))}
               value={501}
               id="game-501"
@@ -80,7 +81,7 @@ export const Darts = () => {
             <label htmlFor="game-501">501</label>
             <input
               type="radio"
-              className={styles.button}
+              className={styles.radio}
               onClick={(e) => dispatch(setGameScore(401))}
               value={401}
               id="game-401"
@@ -90,7 +91,7 @@ export const Darts = () => {
             <label htmlFor="game-401">401</label>
             <input
               type="radio"
-              className={styles.button}
+              className={styles.radio}
               onClick={(e) => dispatch(setGameScore(301))}
               value={301}
               id="game-301"
@@ -113,12 +114,9 @@ export const Darts = () => {
       </div>
     )
   }
-
-  const scoreLeft =
-    scoreToPlay - curPlayer.scores.reduce((acc, cur) => acc + cur, 0);
   
-  // get total value of scores
   const totalPoints = curPlayer.scores.reduce((acc, cur) => acc + cur, 0);
+  const scoreLeft = scoreToPlay - totalPoints
   const average = totalPoints / curPlayer.scores.length;
   
   const checkout = checkouts[scoreLeft] ?? [];
@@ -127,6 +125,16 @@ export const Darts = () => {
     return (
       <div>
         {curPlayer.name} wins.
+        <button
+          className={styles.button}
+          type="reset"
+          onClick={e => {
+            dispatch(resetGame());
+            setReady(false);
+          }}
+        >
+          Reset
+        </button>
       </div>
     )
   }  
@@ -136,7 +144,7 @@ export const Darts = () => {
       <div>
         <div className={styles.header}>
           <div className={styles.name}>
-            {curPlayer.name} to throw.
+            {curPlayer.name} to throw
           </div>
           <div className={styles.score}>
             {scoreLeft}
@@ -184,12 +192,12 @@ export const Darts = () => {
                   {player.scores.map(score => {
                     return (
                       <>
-                        <div>{score}</div>
+                        <div className={styles.score}>{score}</div>
                       </>
                     )
                   })}
                   <div>
-                    Averages: {average.toFixed(2)}
+                    Averages: {average ? average.toFixed(2) : 0}
                   </div>
                 </div>
               )
