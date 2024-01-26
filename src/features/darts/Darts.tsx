@@ -24,8 +24,6 @@ export const Darts = () => {
   const [ready, setReady] = useState(false);
   const [playerName, setPlayerName] = useState("");
 
-  console.log(curPlayer)
-
   const incrementValue = Number(score) || 0
 
   if (!ready) {
@@ -54,14 +52,14 @@ export const Darts = () => {
               }}
             />
             <button
-              className={styles.button}
+              className={styles.buttonSecondary}
               type="submit"
             >
               Add Player
             </button>
             {playersArray.length > 0 && (
               <button
-                className={styles.button}
+                className={styles.buttonSecondary}
                 onClick={e => dispatch(removePlayer())}
               >
                 Remove Player
@@ -181,7 +179,7 @@ export const Darts = () => {
           </form>  
         </div>
       </div>
-      <div className={styles.row}>
+      <div className={styles.scoresWrapper}>
           {
             playersArray.map(player => {
               return (
